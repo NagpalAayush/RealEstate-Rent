@@ -1,11 +1,9 @@
 import React from 'react'
 
-function App() {
+export default function Home() {
   return (
     <div>
-      App
+      Home
     </div>
   )
 }
-
-export default App

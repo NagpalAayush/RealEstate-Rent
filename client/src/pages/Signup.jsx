@@ -1,11 +1,9 @@
 import React from 'react'
 
-function App() {
+export default function Signup() {
   return (
     <div>
-      App
+      Signup
     </div>
   )
 }
-
-export default App
