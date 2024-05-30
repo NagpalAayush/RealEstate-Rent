@@ -31,9 +31,9 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 
 //Error Handeling
-// app.use((err, req, res, next) => {
-//   res.status(500).json(err.message)
-// });
+app.use((err, req, res, next) => {
+  res.status(500).json(err.message)
+});
 
 //Server Starting
 app.listen(3000, (req, res) => {

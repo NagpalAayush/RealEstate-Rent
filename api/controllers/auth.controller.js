@@ -3,7 +3,7 @@ import bcryptjs from "bcryptjs";
 import { wrapAsync } from "../utils/wrapAsync.js";
 
 export const signup = wrapAsync(async (req,res)=>{
-    const {username , email , password} = res.body;
+    const {username , email , password} = req.body;
     const hashedPassword = bcryptjs.hashSync(password , 10);
     const newUser = new User({username , email , password : hashedPassword})
     await newUser.save();
