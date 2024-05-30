@@ -5,6 +5,7 @@ const app = express();
 import userRouter from "./routes/user.Routes.js";
 import authRouter from "./routes/auth.routes.js";
 import cors from "cors"
+import ExpressError from "./utils/ExpressError.js";
 
 dotenv.config();
 //Allowing server to accept JSON
@@ -32,7 +33,12 @@ app.use("/api/auth", authRouter);
 
 //Error Handeling
 app.use((err, req, res, next) => {
-  res.status(500).json(err.message)
+  res.status(err.statusCode || 500).json(
+    {
+      success : false,
+      message : err.message
+    }
+  )
 });
 
 //Server Starting
