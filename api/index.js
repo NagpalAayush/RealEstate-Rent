@@ -4,15 +4,19 @@ import dotenv from "dotenv";
 const app = express();
 import userRouter from "./routes/user.Routes.js";
 import authRouter from "./routes/auth.routes.js";
-import cors from "cors"
+import cors from "cors";
 
 dotenv.config();
 //Allowing server to accept JSON
 app.use(express.json());
 
-
 //Enabeling Cors
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 // Connecting to DataBase
 async function main() {
@@ -32,12 +36,10 @@ app.use("/api/auth", authRouter);
 
 //Error Handeling
 app.use((err, req, res, next) => {
-  res.status(err.statusCode || 500).json(
-    {
-      success : false,
-      message : err.message
-    }
-  )
+  res.status(err.statusCode || 500).json({
+    success: false,
+    message: err.message,
+  });
 });
 
 //Server Starting

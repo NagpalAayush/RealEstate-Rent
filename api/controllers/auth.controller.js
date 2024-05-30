@@ -23,12 +23,9 @@ export const signin = wrapAsync(async (req, res, next) => {
   if (!validPassword) return next(new ExpressError(401, "Incorrect Password"));
   const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
   const { password: pass, ...rest } = validUser._doc;
-  res
-    .cookie("token", token, {
+  res.cookie("Access_token", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
       maxAge: 3 * 24 * 60 * 60 * 1000,
-    })
-    .status(200)
-    .json(rest);
+    }).status(200).json(rest);
 });
