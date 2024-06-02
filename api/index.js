@@ -5,6 +5,7 @@ const app = express();
 import userRouter from "./routes/user.Routes.js";
 import authRouter from "./routes/auth.routes.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 //Allowing server to accept JSON
@@ -17,6 +18,9 @@ app.use(
     credentials: true,
   })
 );
+
+//Retrieving Cookies
+app.use(cookieParser());
 
 // Connecting to DataBase
 async function main() {
