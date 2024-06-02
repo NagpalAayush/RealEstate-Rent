@@ -30,3 +30,12 @@ export const updateUser = wrapAsync(async (req, res, next) => {
   const { password, ...rest } = updatedUser._doc;
   res.status(200).json(rest);
 });
+
+//Delete Function
+export const deleteUser = wrapAsync(async (req, res, next) => {
+  if (req.user.id !== req.params.id) {
+    return next(new ExpressError(403, "Access Denied"));
+  }
+  await User.findByIdAndDelete(req.params.id);
+  res.status(200).json("User Deleted Successfully").clearCookie("Access_token");
+});
