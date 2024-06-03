@@ -6,8 +6,10 @@ import userRouter from "./routes/user.Routes.js";
 import authRouter from "./routes/auth.routes.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import ExpressError from "./utils/ExpressError.js";
+import path from "path";
+import listingRouter from "./routes/listing.route.js"
 
+const __dirname = path.resolve();
 dotenv.config();
 //Allowing server to accept JSON
 app.use(express.json());
@@ -38,13 +40,23 @@ main()
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use('/api/listing', listingRouter);
 
-//Error Handeling
+// Serve static files
+
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
+
 app.use((err, req, res, next) => {
-  let { statusCode, message } = err;
-  res.status(statusCode || 500).json({
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  return res.status(statusCode).json({
     success: false,
-    message: message,
+    statusCode,
+    message,
   });
 });
 //Server Starting

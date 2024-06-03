@@ -1,9 +1,9 @@
-import React from "react";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import { app } from "../fireBase";
-import { useDispatch } from "react-redux";
-import { signinSuccess } from "../redux/user/userSlice";
-import { useNavigate } from "react-router-dom";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
+import { app } from '../firebase';
+import { useDispatch } from 'react-redux';
+import { signInSuccess } from '../redux/user/userSlice';
+import { useNavigate } from 'react-router-dom';
+
 export default function OAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -13,10 +13,11 @@ export default function OAuth() {
       const auth = getAuth(app);
 
       const result = await signInWithPopup(auth, provider);
-      const res = await fetch("http://localhost:3000/api/auth/google", {
-        method: "POST",
+
+      const res = await fetch('/api/auth/google', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           name: result.user.displayName,
@@ -25,20 +26,19 @@ export default function OAuth() {
         }),
       });
       const data = await res.json();
-      dispatch(signinSuccess(data));
-      useNavigate("/");
+      dispatch(signInSuccess(data));
+      navigate('/');
     } catch (error) {
-      console.log("Could Not Signin With Google", error);
+      console.log('could not sign in with google', error);
     }
   };
-
   return (
     <button
-      type="button"
       onClick={handleGoogleClick}
-      className="bg-red-700 text-white p-3 rounded-lg hover:opacity-90"
+      type='button'
+      className='bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95'
     >
-      CONTINUE WITH GOOGLE
+      Continue with google
     </button>
   );
 }
