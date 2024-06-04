@@ -17,7 +17,6 @@ app.use(express.json());
 //Enabeling Cors
 app.use(
   cors({
-    origin: "https://mern-estate-aayush.netlify.app/",
     credentials: true,
   })
 );
