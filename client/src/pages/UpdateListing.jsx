@@ -5,7 +5,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { app } from "../firebase";
+import { app } from "../fireBase.js";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
